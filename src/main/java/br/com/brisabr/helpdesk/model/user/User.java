@@ -8,8 +8,14 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@Getter @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tb_user")
