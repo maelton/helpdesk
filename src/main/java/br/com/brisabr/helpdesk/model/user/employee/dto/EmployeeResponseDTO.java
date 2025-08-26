@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.dto;
+package br.com.brisabr.helpdesk.model.user.employee.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

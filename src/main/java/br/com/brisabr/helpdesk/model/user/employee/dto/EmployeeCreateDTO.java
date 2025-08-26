@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.dto;
+package br.com.brisabr.helpdesk.model.user.employee.dto;
 
 public record EmployeeCreateDTO(
     String firstName,

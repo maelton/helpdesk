@@ -1,4 +1,6 @@
-package br.com.brisabr.helpdesk.model.user;
+package br.com.brisabr.helpdesk.model.user.employee;
+
+import br.com.brisabr.helpdesk.model.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
