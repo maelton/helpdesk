@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "tb_employee")
 public class Employee extends User {
-    private String internalCode; //AUTO-GENERATED
+    private UUID internalCode; //AUTO-GENERATED
     private String firstName;
     private String lastName;
     private String cpf;

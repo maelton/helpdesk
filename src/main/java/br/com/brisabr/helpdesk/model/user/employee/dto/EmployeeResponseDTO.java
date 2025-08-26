@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record EmployeeResponseDTO(
-    UUID userId,
+    Long userId,
     String firstName,
     String lastName,
     String cpf,
-    String internalCode,
+    UUID internalCode,
     String email,
     Boolean isActive,
     LocalDateTime createdAt,
