@@ -8,6 +8,8 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.Email;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,7 @@ import java.time.LocalDateTime;
 public abstract class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Email
     private String username;
     private String password;
     private Boolean isPasswordChanged;
