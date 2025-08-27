@@ -18,7 +18,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email.to());
             message.setSubject(email.subject());
-            message.setText(email.subject());
+            message.setText(email.body());
         sender.send(message);
     }
 }
