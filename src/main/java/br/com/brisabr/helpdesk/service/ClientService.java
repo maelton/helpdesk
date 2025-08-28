@@ -60,11 +60,9 @@ public class ClientService {
     private Client toEntity(ClientCreateDTO dto) {
         Client client = new Client();
         client.setName(dto.name());
-        client.setAddress(dto.address());
-        client.setPhone(dto.phone());
-        client.setStatus(dto.status());
-        // Base User fields (assuming they exist on User)
+        client.setCpf(dto.cpf());
         client.setUsername(dto.email());
+        client.setPassword(dto.password());
         client.setIsActive(dto.isActive());
         return client;
     }

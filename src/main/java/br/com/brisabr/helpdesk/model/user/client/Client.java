@@ -15,6 +15,7 @@ import lombok.Setter;
 @Table(name = "tb_client")
 public class Client extends User {
     private String name;
+    private String cpf;
     private String address;
     private String phone;
     private Boolean status;
