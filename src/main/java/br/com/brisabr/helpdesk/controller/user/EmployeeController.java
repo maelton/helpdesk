@@ -2,6 +2,7 @@ package br.com.brisabr.helpdesk.controller.user;
 
 import br.com.brisabr.helpdesk.model.user.employee.Employee;
 import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeCreateDTO;
+import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.service.EmployeeService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -24,12 +25,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Employee> create(@RequestBody EmployeeCreateDTO dto) {
-        Employee created = employeeService.create(dto);
+    public ResponseEntity<EmployeeResponseDTO> create(@RequestBody EmployeeCreateDTO dto) {
+        EmployeeResponseDTO created = employeeService.create(dto);
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(created.getId())
+            .buildAndExpand(created.userId())
             .toUri();
         return ResponseEntity.created(location).body(created);
     }

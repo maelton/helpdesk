@@ -3,6 +3,7 @@ package br.com.brisabr.helpdesk.service;
 import br.com.brisabr.helpdesk.model.user.employee.Employee;
 import br.com.brisabr.helpdesk.model.user.employee.EmployeeCreatedEvent;
 import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeCreateDTO;
+import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.utils.hash.PasswordGenerator;
 import br.com.brisabr.helpdesk.utils.mail.EmailService;
@@ -28,7 +29,7 @@ public class EmployeeService {
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    public Employee create(EmployeeCreateDTO dto) {
+    public EmployeeResponseDTO create(EmployeeCreateDTO dto) {
         Employee employee = toEntity(dto);
         employee.setPassword(
             passwordEncoder.encode(
@@ -39,7 +40,7 @@ public class EmployeeService {
         eventPublisher.publishEvent(
             new EmployeeCreatedEvent(created)
         );
-        return created;
+        return this.toResponse(created);
     }
 
     @Transactional(readOnly = true)
@@ -69,5 +70,19 @@ public class EmployeeService {
             employee.setUsername(dto.email());
             employee.setIsActive(dto.isActive() != null && dto.isActive());
         return employee;
+    }
+
+    private EmployeeResponseDTO toResponse(Employee employee) {
+        return new EmployeeResponseDTO(
+            employee.getId(),
+            employee.getFirstName(),
+            employee.getLastName(),
+            employee.getCpf(),
+            employee.getInternalCode(),
+            employee.getUsername(),
+            employee.getIsActive(),
+            employee.getCreatedAt(),
+            employee.getUpdatedAt()
+        );
     }
 }
