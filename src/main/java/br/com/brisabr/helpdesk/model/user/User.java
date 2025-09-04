@@ -15,13 +15,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter @Setter
@@ -40,11 +37,6 @@ public abstract class User implements UserDetails {
     private LocalDateTime updatedAt;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(List.of("ROLE_USER").toString()));
-    }
-
-    @Override
     public String getPassword() {
         return this.password;
     }
@@ -53,4 +45,9 @@ public abstract class User implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    };
 }

@@ -19,20 +19,15 @@ public class JwtService {
         this.encoder = encoder;
     }
 
-    public Jwt generateJwt(Authentication authentication) {
+    public Jwt generateJwt(String username) {
         Instant now = Instant.now();
         long expiry = 3600L;
-
-        String scopes = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(" "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuer("helpdesk.brisabr.com.br")
             .issuedAt(now)
             .expiresAt(now.plusSeconds(expiry))
-            .subject(authentication.getPrincipal().toString())
-            .claim("scopes", scopes)
+            .subject(username)
             .build();
         return new Jwt(encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue());
     }
