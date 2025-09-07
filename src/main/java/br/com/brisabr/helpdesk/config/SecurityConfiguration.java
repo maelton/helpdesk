@@ -48,8 +48,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/swagger-ui.html").permitAll()
                 .requestMatchers("/swagger-resources/**").permitAll()
-                // Explicitly permit login endpoint
-                .anyRequest().permitAll() // Require authentication for other endpoints
+                .anyRequest().permitAll()
             )
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
@@ -59,7 +58,7 @@ public class SecurityConfiguration {
 
     @Bean
     JwtEncoder jwtEncoder() {
-        RSAKey rsaKeys= new RSAKey.Builder(publicKey).privateKey(privateKey).build();
+        RSAKey rsaKeys = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
         ImmutableJWKSet<SecurityContext> jwk = new ImmutableJWKSet<>(new JWKSet(rsaKeys));
         return new NimbusJwtEncoder(jwk);
     }
