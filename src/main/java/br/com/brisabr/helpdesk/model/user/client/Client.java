@@ -2,6 +2,7 @@ package br.com.brisabr.helpdesk.model.user.client;
 
 import br.com.brisabr.helpdesk.model.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -15,6 +16,8 @@ import lombok.Setter;
 @Table(name = "tb_client")
 public class Client extends User {
     private String name;
+    
+    @Column(unique=true, nullable=false, length = 11)
     private String cpf;
     private String address;
     private String phone;

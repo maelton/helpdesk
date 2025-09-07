@@ -2,6 +2,7 @@ package br.com.brisabr.helpdesk.model.user.employee;
 
 import br.com.brisabr.helpdesk.model.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -19,5 +20,7 @@ public class Employee extends User {
     private UUID internalCode; //AUTO-GENERATED
     private String firstName;
     private String lastName;
+
+    @Column(unique=true, nullable=false, length = 11)
     private String cpf;
 }
