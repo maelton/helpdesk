@@ -10,5 +10,7 @@ public record ProductResponseDTO(
     Boolean isActive,
     String description,
     LocalDateTime createdAt,
-    LocalDateTime updatedAt
+    LocalDateTime updatedAt,
+    Boolean isPhysical,
+    String category
 ) {}

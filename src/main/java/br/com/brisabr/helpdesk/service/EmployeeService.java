@@ -6,14 +6,13 @@ import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeCreateDTO;
 import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.utils.hash.PasswordGenerator;
-import br.com.brisabr.helpdesk.utils.mail.EmailService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,10 +21,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
-
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
