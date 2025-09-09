@@ -2,7 +2,7 @@ package br.com.brisabr.helpdesk.model.ticket;
 
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
-
+import br.com.brisabr.helpdesk.model.ticket.category.TicketCategory;
 import br.com.brisabr.helpdesk.model.user.client.Client;
 import br.com.brisabr.helpdesk.model.user.employee.Employee;
 
@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -33,14 +34,19 @@ public class Ticket {
     private Client requester;
     @ManyToOne
     private Product product;
-    //TODO: private Contract contract;
+    
     @ManyToOne
     private Employee closedBy;
     private String description;
     private String priority;
     private LocalDateTime dueDate;
     private String status;
+    
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private TicketCategory category;
     private LocalDateTime closedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    //TODO: private Contract contract;
 }

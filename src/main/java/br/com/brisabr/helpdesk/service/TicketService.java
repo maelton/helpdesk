@@ -2,8 +2,10 @@ package br.com.brisabr.helpdesk.service;
 
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.ticket.Ticket;
+import br.com.brisabr.helpdesk.model.ticket.category.TicketCategory;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
 import br.com.brisabr.helpdesk.model.user.client.Client;
@@ -13,6 +15,7 @@ import br.com.brisabr.helpdesk.repository.ClientRepository;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.repository.ProductRepository;
 import br.com.brisabr.helpdesk.repository.SlaRepository;
+import br.com.brisabr.helpdesk.repository.TicketCategoryRepository;
 import br.com.brisabr.helpdesk.repository.TicketRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -35,6 +38,7 @@ public class TicketService {
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
     private final EmployeeRepository employeeRepository;
+    private final TicketCategoryRepository ticketCategoryRepository;
 
     @Transactional
     public TicketResponseDTO create(TicketCreateDTO dto) {
@@ -144,6 +148,29 @@ public class TicketService {
         t.setStatus(dto.status());
         return t;
     }
+
+    private Ticket toEntity(TicketOpeningDTO dto) {
+        Product product = productRepository.findById(dto.productId())
+            .orElseThrow(() -> new EntityNotFoundException("Product not found: " + dto.productId()));
+
+        TicketCategory ticketCategory = ticketCategoryRepository.findById(dto.categoryId())
+            .orElseThrow(() -> new EntityNotFoundException("Ticket category not found"));
+
+        Ticket t = new Ticket();
+        t.setTitle(dto.title());
+        t.setProduct(product);
+        t.setCategory(ticketCategory);
+        t.setDescription(dto.description());
+        
+        return t;
+    }
+
+    @Transactional
+    public TicketResponseDTO openTicket(TicketOpeningDTO dto) {
+        Ticket ticket = toEntity(dto);
+        Ticket saved = ticketRepository.save(ticket);
+        return toResponse(saved);
+    } 
 
     private TicketResponseDTO toResponse(Ticket t) {
         return new TicketResponseDTO(

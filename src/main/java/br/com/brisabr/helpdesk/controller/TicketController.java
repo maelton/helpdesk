@@ -2,6 +2,7 @@ package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
 import br.com.brisabr.helpdesk.service.TicketService;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,12 @@ public class TicketController {
         TicketResponseDTO created = ticketService.create(dto);
         URI location = URI.create("/api/v1/tickets/" + created.id());
         return ResponseEntity.created(location).body(created);
+    }
+
+    @PostMapping("/open")
+    public ResponseEntity<TicketResponseDTO> openTicket(@Valid @RequestBody TicketOpeningDTO dto) {
+        TicketResponseDTO opened = ticketService.openTicket(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(opened);
     }
 
     @GetMapping("/{id}")
