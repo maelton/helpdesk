@@ -152,14 +152,9 @@ public class TicketService {
     private Ticket toEntity(TicketOpeningDTO dto) {
         Product product = productRepository.findById(dto.productId())
             .orElseThrow(() -> new EntityNotFoundException("Product not found: " + dto.productId()));
-
-        TicketCategory ticketCategory = ticketCategoryRepository.findById(dto.categoryId())
-            .orElseThrow(() -> new EntityNotFoundException("Ticket category not found"));
-
         Ticket t = new Ticket();
         t.setTitle(dto.title());
         t.setProduct(product);
-        t.setCategory(ticketCategory);
         t.setDescription(dto.description());
         
         return t;
