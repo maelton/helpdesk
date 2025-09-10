@@ -46,6 +46,11 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    @Transactional
+    public List<ProductCategory> getAllProductCategory() {
+        return productCategoryRepository.findAll();
+    }
+
     private Product toEntity(ProductCreateDTO dto) {
         Product product = new Product();
         product.setName(dto.name());

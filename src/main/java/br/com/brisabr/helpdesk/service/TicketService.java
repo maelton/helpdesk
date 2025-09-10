@@ -1,33 +1,31 @@
 package br.com.brisabr.helpdesk.service;
 
-import br.com.brisabr.helpdesk.model.sla.Sla;
-import br.com.brisabr.helpdesk.model.ticket.Ticket;
-import br.com.brisabr.helpdesk.model.ticket.category.TicketCategory;
-import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
-import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
-import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
-import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
-import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
-import br.com.brisabr.helpdesk.model.user.client.Client;
-import br.com.brisabr.helpdesk.model.product.Product;
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
-import br.com.brisabr.helpdesk.repository.ClientRepository;
-import br.com.brisabr.helpdesk.repository.EmployeeRepository;
-import br.com.brisabr.helpdesk.repository.ProductRepository;
-import br.com.brisabr.helpdesk.repository.SlaRepository;
-import br.com.brisabr.helpdesk.repository.TicketCategoryRepository;
-import br.com.brisabr.helpdesk.repository.TicketRepository;
-
-import jakarta.persistence.EntityNotFoundException;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import br.com.brisabr.helpdesk.model.product.Product;
+import br.com.brisabr.helpdesk.model.sla.Sla;
+import br.com.brisabr.helpdesk.model.ticket.Ticket;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
+import br.com.brisabr.helpdesk.model.user.client.Client;
+import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.repository.ClientRepository;
+import br.com.brisabr.helpdesk.repository.EmployeeRepository;
+import br.com.brisabr.helpdesk.repository.ProductRepository;
+import br.com.brisabr.helpdesk.repository.SlaRepository;
+import br.com.brisabr.helpdesk.repository.TicketRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +36,6 @@ public class TicketService {
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
     private final EmployeeRepository employeeRepository;
-    private final TicketCategoryRepository ticketCategoryRepository;
 
     @Transactional
     public TicketResponseDTO create(TicketCreateDTO dto) {

@@ -1,6 +1,7 @@
 package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.product.Product;
+import br.com.brisabr.helpdesk.model.product.category.ProductCategory;
 import br.com.brisabr.helpdesk.model.product.dto.ProductCreateDTO;
 import br.com.brisabr.helpdesk.service.ProductService;
 
@@ -44,6 +45,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAll() {
         List<Product> products = productService.getAll();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<ProductCategory>> getAllProductCategory() {
+        return ResponseEntity.ok(productService.getAllProductCategory());
     }
 
     @DeleteMapping("/{id}")
