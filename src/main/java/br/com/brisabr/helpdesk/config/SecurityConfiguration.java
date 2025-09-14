@@ -42,6 +42,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()))
+            
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/api/v1/auth/login").permitAll()
                 .requestMatchers("/v3/api-docs/**").permitAll()
@@ -49,10 +53,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/swagger-ui.html").permitAll()
                 .requestMatchers("/swagger-resources/**").permitAll()
                 .anyRequest().permitAll()
-            )
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()));
+            );
         return httpSecurity.build();
     }
 
