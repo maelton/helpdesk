@@ -45,6 +45,9 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name="category_id")
     private TicketCategory category;
+
+    @ManyToOne
+    private Employee assignedTo;
     private LocalDateTime closedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

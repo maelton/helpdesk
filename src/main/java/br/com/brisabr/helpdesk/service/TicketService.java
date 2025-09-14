@@ -149,11 +149,17 @@ public class TicketService {
     private Ticket toEntity(TicketOpeningDTO dto) {
         Product product = productRepository.findById(dto.productId())
             .orElseThrow(() -> new EntityNotFoundException("Product not found: " + dto.productId()));
+
+        Long responsibleId = employeeRepository.findRandomEmployeeId()
+            .orElseThrow(() -> new RuntimeException("Unable to find employee ID"));
+        Employee responsible = employeeRepository.findById(responsibleId)
+            .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + responsibleId));
+
         Ticket t = new Ticket();
-        t.setTitle(dto.title());
-        t.setProduct(product);
-        t.setDescription(dto.description());
-        
+            t.setTitle(dto.title());
+            t.setProduct(product);
+            t.setDescription(dto.description());
+            t.setAssignedTo(responsible);
         return t;
     }
 
@@ -170,6 +176,7 @@ public class TicketService {
             t.getTitle(),
             t.getSla() != null ? t.getSla().getId() : null,
             t.getRequester() != null ? t.getRequester().getId() : null,
+            t.getAssignedTo() != null ? t.getAssignedTo().getId() : null,
             t.getProduct() != null ? t.getProduct().getId() : null,
             t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getDescription(),

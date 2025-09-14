@@ -7,6 +7,7 @@ public record TicketResponseDTO(
     String title,
     Long slaId,
     Long requesterId,
+    Long responsibleEmployeeId,
     Long productId,
     Long closedById,
     String description,
