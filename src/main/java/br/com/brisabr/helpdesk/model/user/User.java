@@ -2,7 +2,7 @@ package br.com.brisabr.helpdesk.model.user;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -43,7 +43,7 @@ public abstract class User implements UserDetails {
     
     @ManyToMany
     @JoinTable(name="tb_user_roles")
-    private HashSet<UserRole> roles;
+    private Set<UserRole> roles;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
