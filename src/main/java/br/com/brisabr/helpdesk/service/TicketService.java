@@ -15,12 +15,15 @@ import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.repository.ProductRepository;
 import br.com.brisabr.helpdesk.repository.SlaRepository;
 import br.com.brisabr.helpdesk.repository.TicketRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.EntityNotFoundException;
+
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 

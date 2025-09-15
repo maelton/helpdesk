@@ -21,6 +21,14 @@ VALUES (1,
             true,
             true,
             now(),
+            now()),
+
+        (4,
+            'odilon@brisa.com.br',
+            '{bcrypt}$2a$12$Sp979uNTcNxWX9wXgc6w3eJxuz8jaiNbCDXsrZXj2JrPm67G3B1ZC', -- odilon
+            true,
+            true,
+            now(),
             now());
 
 INSERT INTO tb_employee (id, internal_code, first_name, last_name, cpf)
@@ -44,3 +52,11 @@ VALUES (3,
         'Carlos',
         'das Galáxias',
         '34524605096');
+
+INSERT INTO tb_client (id, name, cpf, address, phone, status)
+VALUES (4,
+        'Od ilon',
+        '92855684080',
+        'Rua da BRISA',
+        '11 99999-9999',
+        true);
