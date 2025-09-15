@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS tb_product
     description   VARCHAR(255),
     is_physical   BOOLEAN,
     category_id   BIGINT,
+    sla_id        BIGINT,
     created_at    TIMESTAMP WITHOUT TIME ZONE,
     updated_at    TIMESTAMP WITHOUT TIME ZONE,
     CONSTRAINT pk_tb_product PRIMARY KEY (id)
@@ -139,6 +140,9 @@ ALTER TABLE tb_employee
 
 ALTER TABLE tb_product
     ADD CONSTRAINT FK_TB_PRODUCT_ON_CATEGORY FOREIGN KEY (category_id) REFERENCES tb_product_category (id);
+
+ALTER TABLE tb_product
+    ADD CONSTRAINT FK_TB_PRODUCT_ON_SLA FOREIGN KEY (sla_id) REFERENCES tb_sla (id);
 
 ALTER TABLE tb_ticket
     ADD CONSTRAINT FK_TB_TICKET_ON_CATEGORY FOREIGN KEY (category_id) REFERENCES tb_ticket_category (id);

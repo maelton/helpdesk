@@ -37,3 +37,23 @@ INSERT INTO tb_product (
     now(),
     now()
 );
+
+INSERT INTO tb_product (
+    internal_code,
+    name,
+    is_active,
+    description,
+    is_physical,
+    category_id,
+    created_at,
+    updated_at
+) VALUES (
+             'd354dd7f-5cb9-4888-bc73-a4d1454735b8',
+             'Produto Z',
+             true,
+             'O melhor produto do eixo das cotas',
+             true,
+             null,
+             now(),
+             now()
+         );

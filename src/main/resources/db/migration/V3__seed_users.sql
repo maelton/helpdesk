@@ -55,7 +55,7 @@ VALUES (3,
 
 INSERT INTO tb_client (id, name, cpf, address, phone, status)
 VALUES (4,
-        'Od ilon',
+        'Odilon',
         '92855684080',
         'Rua da BRISA',
         '11 99999-9999',

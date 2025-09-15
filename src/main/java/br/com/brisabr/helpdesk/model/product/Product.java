@@ -1,6 +1,7 @@
 package br.com.brisabr.helpdesk.model.product;
 
 import br.com.brisabr.helpdesk.model.product.category.ProductCategory;
+import br.com.brisabr.helpdesk.model.sla.Sla;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,9 @@ public class Product {
 
     @ManyToOne @JoinColumn(name="category_id")
     private ProductCategory category;
+
+    @ManyToOne @JoinColumn(name="sla_id")
+    private Sla sla;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
