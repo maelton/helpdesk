@@ -154,6 +154,7 @@ public class TicketService {
             ticket.setTitle(dto.title());
             ticket.setProduct(product);
             ticket.setDescription(dto.description());
+            ticket.setSla(product.getSla());
         return ticket;
     }
 
