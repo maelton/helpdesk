@@ -1,12 +1,5 @@
 package br.com.brisabr.helpdesk.service;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.ticket.Ticket;
@@ -22,10 +15,14 @@ import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.repository.ProductRepository;
 import br.com.brisabr.helpdesk.repository.SlaRepository;
 import br.com.brisabr.helpdesk.repository.TicketRepository;
-
 import jakarta.persistence.EntityNotFoundException;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -150,22 +147,27 @@ public class TicketService {
         Product product = productRepository.findById(dto.productId())
             .orElseThrow(() -> new EntityNotFoundException("Product not found: " + dto.productId()));
 
-        Long responsibleId = employeeRepository.findRandomEmployeeId()
-            .orElseThrow(() -> new RuntimeException("Unable to find employee ID"));
-        Employee responsible = employeeRepository.findById(responsibleId)
-            .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + responsibleId));
-
-        Ticket t = new Ticket();
-            t.setTitle(dto.title());
-            t.setProduct(product);
-            t.setDescription(dto.description());
-            t.setAssignedTo(responsible);
-        return t;
+        Ticket ticket = new Ticket();
+            ticket.setTitle(dto.title());
+            ticket.setProduct(product);
+            ticket.setDescription(dto.description());
+        return ticket;
     }
 
     @Transactional
-    public TicketResponseDTO openTicket(TicketOpeningDTO dto) {
+    public TicketResponseDTO openTicket(TicketOpeningDTO dto, String requesterUsername) {
         Ticket ticket = toEntity(dto);
+
+        Long responsibleId = employeeRepository.findRandomEmployeeId()
+            .orElseThrow(() -> new RuntimeException("Unable to find employee ID"));
+        Employee responsibleEmployee = employeeRepository.findById(responsibleId)
+            .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + responsibleId));
+        Client requester = clientRepository.findByUsername(requesterUsername)
+            .orElseThrow(() -> new EntityNotFoundException("Unable to find client"));
+
+        ticket.setAssignedTo(responsibleEmployee);
+        ticket.setRequester(requester);
+
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
     } 

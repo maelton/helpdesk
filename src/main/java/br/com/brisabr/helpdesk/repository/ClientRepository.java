@@ -3,4 +3,8 @@ package br.com.brisabr.helpdesk.repository;
 import br.com.brisabr.helpdesk.model.user.client.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClientRepository extends JpaRepository<Client, Long> {}
+import java.util.Optional;
+
+public interface ClientRepository extends JpaRepository<Client, Long> {
+    Optional<Client> findByUsername(String username);
+}

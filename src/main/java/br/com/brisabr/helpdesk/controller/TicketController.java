@@ -2,10 +2,13 @@ package br.com.brisabr.helpdesk.controller;
 
 import java.net.URI;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,9 +43,10 @@ public class TicketController {
         return ResponseEntity.created(location).body(created);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/open")
-    public ResponseEntity<TicketResponseDTO> openTicket(@Valid @RequestBody TicketOpeningDTO dto) {
-        TicketResponseDTO opened = ticketService.openTicket(dto);
+    public ResponseEntity<TicketResponseDTO> openTicket(@Valid @RequestBody TicketOpeningDTO dto, @AuthenticationPrincipal Jwt requesterJwt) {
+        TicketResponseDTO opened = ticketService.openTicket(dto, requesterJwt.getSubject());
         return ResponseEntity.status(HttpStatus.CREATED).body(opened);
     }
 

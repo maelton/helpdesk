@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/swagger-ui.html").permitAll()
                 .requestMatchers("/swagger-resources/**").permitAll()
+                .requestMatchers("/api/v1/tickets/open").authenticated()
                 .anyRequest().permitAll()
             );
         return httpSecurity.build();
