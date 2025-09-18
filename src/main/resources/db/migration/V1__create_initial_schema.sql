@@ -116,8 +116,10 @@ CREATE TABLE IF NOT EXISTS tb_user_role
 
 CREATE TABLE IF NOT EXISTS tb_user_roles
 (
+    id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY,
     user_id  BIGINT NOT NULL,
-    roles_id BIGINT NOT NULL
+    roles_id BIGINT NOT NULL,
+    UNIQUE(user_id, roles_id)
 );
 
 ALTER TABLE tb_client
