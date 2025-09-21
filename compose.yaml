@@ -1,6 +1,8 @@
+name: BRISA Helpdesk
 services:
-  postgres:
-    image: 'postgres:latest'
+  rdbms:
+    container_name: brisa-helpdesk-database
+    image: 'postgres:17.6'
     environment:
       - 'POSTGRES_DB=helpdesk'
       - 'POSTGRES_PASSWORD=admin'

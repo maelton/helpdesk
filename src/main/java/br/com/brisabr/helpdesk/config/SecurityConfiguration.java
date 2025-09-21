@@ -45,13 +45,9 @@ public class SecurityConfiguration {
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()))
-            
             .authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .requestMatchers("/api/v1/auth/login").permitAll()
-                .requestMatchers("/v3/api-docs/**").permitAll()
-                .requestMatchers("/swagger-ui/**").permitAll()
-                .requestMatchers("/swagger-ui.html").permitAll()
-                .requestMatchers("/swagger-resources/**").permitAll()
                 .requestMatchers("/api/v1/tickets/open").authenticated()
                 .anyRequest().permitAll()
             );
