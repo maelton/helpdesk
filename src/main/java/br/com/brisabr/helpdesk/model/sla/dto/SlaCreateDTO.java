@@ -5,5 +5,7 @@ public record SlaCreateDTO(
     String description,
     Long responseTime,
     Long resolutionTime,
-    Boolean isActive
+    Boolean isActive,
+    Long priorityId,
+    Long calendarId
 ) {}

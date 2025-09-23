@@ -1,8 +1,11 @@
 package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.sla.Sla;
+import br.com.brisabr.helpdesk.model.sla.SlaPriority;
+import br.com.brisabr.helpdesk.model.sla.SlaCalendar;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaCreateDTO;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaUpdateDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaResponseDTO;
 import br.com.brisabr.helpdesk.service.SlaService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -36,14 +39,14 @@ public class SlaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Sla> getById(@PathVariable Long id) {
-        Sla sla = slaService.getById(id);
+    public ResponseEntity<SlaResponseDTO> getById(@PathVariable Long id) {
+        SlaResponseDTO sla = slaService.getByIdAsDTO(id);
         return ResponseEntity.ok(sla);
     }
 
     @GetMapping
-    public ResponseEntity<List<Sla>> getAll() {
-        List<Sla> slas = slaService.getAll();
+    public ResponseEntity<List<SlaResponseDTO>> getAll() {
+        List<SlaResponseDTO> slas = slaService.getAllAsDTO();
         return ResponseEntity.ok(slas);
     }
 
@@ -57,6 +60,18 @@ public class SlaController {
     public ResponseEntity<Sla> update(@PathVariable Long id, @RequestBody SlaUpdateDTO dto) {
         Sla updated = slaService.update(id, dto);
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/priorities")
+    public ResponseEntity<List<SlaPriority>> getAllPriorities() {
+        List<SlaPriority> priorities = slaService.getAllPriorities();
+        return ResponseEntity.ok(priorities);
+    }
+
+    @GetMapping("/calendars")
+    public ResponseEntity<List<SlaCalendar>> getAllCalendars() {
+        List<SlaCalendar> calendars = slaService.getAllCalendars();
+        return ResponseEntity.ok(calendars);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

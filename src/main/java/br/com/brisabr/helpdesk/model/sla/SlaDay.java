@@ -5,36 +5,48 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_sla")
-public class Sla {
+@Table(name = "tb_sla_day")
+public class SlaDay {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "calendar_id")
+    @JoinColumn(name = "calendar_id", nullable = false)
+    @JsonBackReference
     private SlaCalendar calendar;
     
-    @ManyToOne
-    @JoinColumn(name = "priority_id")
-    private SlaPriority priority;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DayOfWeek dayOfWeek;
     
-    private String name;
-    private String description;
-    private Long responseTime;
-    private Long resolutionTime;
-    private Boolean isActive;
+    @Column(nullable = false)
+    private LocalTime startTime;
+    
+    @Column(nullable = false)
+    private LocalTime endTime;
+    
+    @Column(nullable = false)
+    private Boolean isWorkingDay;
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

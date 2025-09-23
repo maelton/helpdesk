@@ -1,9 +1,14 @@
 package br.com.brisabr.helpdesk.service;
 
 import br.com.brisabr.helpdesk.model.sla.Sla;
+import br.com.brisabr.helpdesk.model.sla.SlaPriority;
+import br.com.brisabr.helpdesk.model.sla.SlaCalendar;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaCreateDTO;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaUpdateDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaResponseDTO;
 import br.com.brisabr.helpdesk.repository.SlaRepository;
+import br.com.brisabr.helpdesk.repository.SlaPriorityRepository;
+import br.com.brisabr.helpdesk.repository.SlaCalendarRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,6 +25,8 @@ import java.util.List;
 public class SlaService {
 
     private final SlaRepository slaRepository;
+    private final SlaPriorityRepository slaPriorityRepository;
+    private final SlaCalendarRepository slaCalendarRepository;
 
     @Transactional
     public Sla create(SlaCreateDTO dto) {
@@ -34,8 +41,27 @@ public class SlaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Sla> getAll() {
-        return slaRepository.findAll();
+    public List<SlaResponseDTO> getAllAsDTO() {
+        return slaRepository.findAll().stream()
+            .map(this::toResponseDTO)
+            .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public SlaResponseDTO getByIdAsDTO(Long id) {
+        Sla sla = slaRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("SLA not found with id: " + id));
+        return toResponseDTO(sla);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SlaPriority> getAllPriorities() {
+        return slaPriorityRepository.findByIsActiveTrueOrderByLevel();
+    }
+
+    @Transactional(readOnly = true)
+    public List<SlaCalendar> getAllCalendars() {
+        return slaCalendarRepository.findByIsActiveTrueOrderByName();
     }
 
     @Transactional
@@ -62,6 +88,19 @@ public class SlaService {
         sla.setResponseTime(dto.responseTime());
         sla.setResolutionTime(dto.resolutionTime());
         sla.setIsActive(dto.isActive() != null && dto.isActive());
+        
+        if (dto.priorityId() != null) {
+            SlaPriority priority = slaPriorityRepository.findById(dto.priorityId())
+                .orElseThrow(() -> new EntityNotFoundException("SLA Priority not found with id: " + dto.priorityId()));
+            sla.setPriority(priority);
+        }
+        
+        if (dto.calendarId() != null) {
+            SlaCalendar calendar = slaCalendarRepository.findById(dto.calendarId())
+                .orElseThrow(() -> new EntityNotFoundException("SLA Calendar not found with id: " + dto.calendarId()));
+            sla.setCalendar(calendar);
+        }
+        
         sla.setCreatedAt(LocalDateTime.now());
         sla.setUpdatedAt(LocalDateTime.now());
         return sla;
@@ -83,6 +122,70 @@ public class SlaService {
         if (dto.isActive() != null) {
             sla.setIsActive(dto.isActive());
         }
+        
+        if (dto.priorityId() != null) {
+            SlaPriority priority = slaPriorityRepository.findById(dto.priorityId())
+                .orElseThrow(() -> new EntityNotFoundException("SLA Priority not found with id: " + dto.priorityId()));
+            sla.setPriority(priority);
+        }
+        
+        if (dto.calendarId() != null) {
+            SlaCalendar calendar = slaCalendarRepository.findById(dto.calendarId())
+                .orElseThrow(() -> new EntityNotFoundException("SLA Calendar not found with id: " + dto.calendarId()));
+            sla.setCalendar(calendar);
+        }
+        
         sla.setUpdatedAt(LocalDateTime.now());
+    }
+
+    private SlaResponseDTO toResponseDTO(Sla sla) {
+        SlaResponseDTO.SlaPriorityResponseDTO priorityDTO = null;
+        if (sla.getPriority() != null) {
+            priorityDTO = new SlaResponseDTO.SlaPriorityResponseDTO(
+                sla.getPriority().getId(),
+                sla.getPriority().getName(),
+                sla.getPriority().getDescription(),
+                sla.getPriority().getLevel(),
+                sla.getPriority().getColor()
+            );
+        }
+
+        SlaResponseDTO.SlaCalendarResponseDTO calendarDTO = null;
+        if (sla.getCalendar() != null) {
+            List<SlaResponseDTO.SlaDayResponseDTO> dayDTOs = 
+                sla.getCalendar().getSlaDays() != null ? 
+                sla.getCalendar().getSlaDays().stream()
+                    .map(day -> new SlaResponseDTO.SlaDayResponseDTO(
+                        day.getId(),
+                        day.getDayOfWeek(),
+                        day.getStartTime(),
+                        day.getEndTime(),
+                        day.getIsWorkingDay()
+                    ))
+                    .toList() : List.of();
+
+            calendarDTO = new SlaResponseDTO.SlaCalendarResponseDTO(
+                sla.getCalendar().getId(),
+                sla.getCalendar().getName(),
+                sla.getCalendar().getDescription(),
+                sla.getCalendar().getTimezone(),
+                sla.getCalendar().getConsiderWeekends(),
+                sla.getCalendar().getConsiderHolidays(),
+                dayDTOs
+            );
+        }
+
+        return new SlaResponseDTO(
+            sla.getId(),
+            sla.getName(),
+            sla.getDescription(),
+            sla.getResponseTime(),
+            sla.getResolutionTime(),
+            sla.getIsActive(),
+            priorityDTO,
+            calendarDTO,
+            sla.getCreatedAt(),
+            sla.getUpdatedAt()
+        );
     }
 }
