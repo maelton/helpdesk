@@ -2,6 +2,7 @@ package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaCreateDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaUpdateDTO;
 import br.com.brisabr.helpdesk.service.SlaService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -50,6 +51,12 @@ public class SlaController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         slaService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Sla> update(@PathVariable Long id, @RequestBody SlaUpdateDTO dto) {
+        Sla updated = slaService.update(id, dto);
+        return ResponseEntity.ok(updated);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
