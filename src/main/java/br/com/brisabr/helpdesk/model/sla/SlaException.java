@@ -48,10 +48,4 @@ public class SlaException {
     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
-    public enum SlaExceptionType {
-        HOLIDAY,
-        SPECIAL_HOURS,
-        NON_WORKING_DAY
-    }
 }

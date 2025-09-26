@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -46,7 +47,7 @@ public class SlaCalendar {
     
     @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<SlaDay> slaDays;
+    private Set<SlaDay> slaDays = new LinkedHashSet<>();
     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

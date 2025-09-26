@@ -40,13 +40,13 @@ public class SlaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SlaResponseDTO> getById(@PathVariable Long id) {
-        SlaResponseDTO sla = slaService.getByIdAsDTO(id);
+        SlaResponseDTO sla = slaService.getById(id);
         return ResponseEntity.ok(sla);
     }
 
     @GetMapping
     public ResponseEntity<List<SlaResponseDTO>> getAll() {
-        List<SlaResponseDTO> slas = slaService.getAllAsDTO();
+        List<SlaResponseDTO> slas = slaService.getAll();
         return ResponseEntity.ok(slas);
     }
 

@@ -6,6 +6,9 @@ import br.com.brisabr.helpdesk.model.sla.SlaCalendar;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaCreateDTO;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaUpdateDTO;
 import br.com.brisabr.helpdesk.model.sla.dto.SlaResponseDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaPriorityResponseDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaCalendarResponseDTO;
+import br.com.brisabr.helpdesk.model.sla.dto.SlaDayResponseDTO;
 import br.com.brisabr.helpdesk.repository.SlaRepository;
 import br.com.brisabr.helpdesk.repository.SlaPriorityRepository;
 import br.com.brisabr.helpdesk.repository.SlaCalendarRepository;
@@ -35,20 +38,20 @@ public class SlaService {
     }
 
     @Transactional(readOnly = true)
-    public Sla getById(Long id) {
+    public Sla getEntityById(Long id) {
         return slaRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("SLA not found with id: " + id));
     }
 
     @Transactional(readOnly = true)
-    public List<SlaResponseDTO> getAllAsDTO() {
+    public List<SlaResponseDTO> getAll() {
         return slaRepository.findAll().stream()
             .map(this::toResponseDTO)
             .toList();
     }
 
     @Transactional(readOnly = true)
-    public SlaResponseDTO getByIdAsDTO(Long id) {
+    public SlaResponseDTO getById(Long id) {
         Sla sla = slaRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("SLA not found with id: " + id));
         return toResponseDTO(sla);
@@ -139,9 +142,9 @@ public class SlaService {
     }
 
     private SlaResponseDTO toResponseDTO(Sla sla) {
-        SlaResponseDTO.SlaPriorityResponseDTO priorityDTO = null;
+        SlaPriorityResponseDTO priorityDTO = null;
         if (sla.getPriority() != null) {
-            priorityDTO = new SlaResponseDTO.SlaPriorityResponseDTO(
+            priorityDTO = new SlaPriorityResponseDTO(
                 sla.getPriority().getId(),
                 sla.getPriority().getName(),
                 sla.getPriority().getDescription(),
@@ -150,12 +153,11 @@ public class SlaService {
             );
         }
 
-        SlaResponseDTO.SlaCalendarResponseDTO calendarDTO = null;
+        SlaCalendarResponseDTO calendarDTO = null;
         if (sla.getCalendar() != null) {
-            List<SlaResponseDTO.SlaDayResponseDTO> dayDTOs = 
-                sla.getCalendar().getSlaDays() != null ? 
+            List<SlaDayResponseDTO> dayDTOs = sla.getCalendar().getSlaDays() != null ?
                 sla.getCalendar().getSlaDays().stream()
-                    .map(day -> new SlaResponseDTO.SlaDayResponseDTO(
+                    .map(day -> new SlaDayResponseDTO(
                         day.getId(),
                         day.getDayOfWeek(),
                         day.getStartTime(),
@@ -164,7 +166,7 @@ public class SlaService {
                     ))
                     .toList() : List.of();
 
-            calendarDTO = new SlaResponseDTO.SlaCalendarResponseDTO(
+            calendarDTO = new SlaCalendarResponseDTO(
                 sla.getCalendar().getId(),
                 sla.getCalendar().getName(),
                 sla.getCalendar().getDescription(),
