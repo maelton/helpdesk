@@ -9,6 +9,8 @@ public record SlaResponseDTO(
     Long responseTime,
     Long resolutionTime,
     Boolean isActive,
+    SlaPriorityResponseDTO priority,
+    SlaCalendarResponseDTO calendar,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}

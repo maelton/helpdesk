@@ -5,36 +5,47 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_sla")
-public class Sla {
+@Table(name = "tb_sla_exception")
+public class SlaException {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "calendar_id")
-    private SlaCalendar calendar;
-    
-    @ManyToOne
-    @JoinColumn(name = "priority_id")
-    private SlaPriority priority;
-    
+    @Column(nullable = false)
     private String name;
+    
     private String description;
-    private Long responseTime;
-    private Long resolutionTime;
+    
+    @Column(nullable = false)
+    private LocalDate exceptionDate;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SlaExceptionType type;
+    
+    private LocalTime startTime;
+    private LocalTime endTime;
+    
+    @Column(nullable = false)
+    private Boolean isRecurring;
+    
+    @Column(nullable = false)
     private Boolean isActive;
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
