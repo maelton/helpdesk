@@ -8,6 +8,7 @@ import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
+import br.com.brisabr.helpdesk.model.ticket.enums.TicketStatus;
 import br.com.brisabr.helpdesk.model.user.client.Client;
 import br.com.brisabr.helpdesk.model.user.employee.Employee;
 import br.com.brisabr.helpdesk.repository.ClientRepository;
@@ -155,6 +156,11 @@ public class TicketService {
             ticket.setProduct(product);
             ticket.setDescription(dto.description());
             ticket.setSla(product.getSla());
+            ticket.setDueDate(LocalDateTime.now().plusSeconds(product.getSla().getResolutionTime()));
+            ticket.setPriority(product.getSla().getPriority().getName());
+            ticket.setStatus(TicketStatus.OPEN.toString());
+            ticket.setCreatedAt(LocalDateTime.now());
+            ticket.setUpdatedAt(LocalDateTime.now());
         return ticket;
     }
 
@@ -184,12 +190,12 @@ public class TicketService {
             t.getRequester() != null ? t.getRequester().getId() : null,
             t.getAssignedTo() != null ? t.getAssignedTo().getId() : null,
             t.getProduct() != null ? t.getProduct().getId() : null,
-            t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getDescription(),
             t.getPriority(),
             t.getDueDate(),
             t.getStatus(),
             t.getClosedAt(),
+            t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getCreatedAt(),
             t.getUpdatedAt()
         );
