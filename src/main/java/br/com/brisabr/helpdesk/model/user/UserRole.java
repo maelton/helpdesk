@@ -1,5 +1,7 @@
 package br.com.brisabr.helpdesk.model.user;
 
+import br.com.brisabr.helpdesk.model.user.enums.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
