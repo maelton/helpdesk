@@ -47,6 +47,12 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
+    public Employee getByUsername(String username) {
+        return employeeRepository.findByUsername(username)
+            .orElseThrow(() -> new EntityNotFoundException("Employee not found with username: " + username));
+    }
+
+    @Transactional(readOnly = true)
     public List<Employee> getAll() {
         return employeeRepository.findAll();
     }
@@ -57,6 +63,10 @@ public class EmployeeService {
             throw new EntityNotFoundException("Employee not found with id: " + id);
         }
         employeeRepository.deleteById(id);
+    }
+
+    public boolean existsByUsername(String username) {
+        return employeeRepository.existsByUsername(username);
     }
 
     private Employee toEntity(EmployeeCreateDTO dto) {

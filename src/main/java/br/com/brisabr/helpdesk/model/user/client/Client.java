@@ -18,7 +18,7 @@ public class Client extends User {
     private String name;
     
     @Column(unique=true, nullable=false, length = 11)
-    private String cpf;
+    private String taxId;
     private String address;
     private String phone;
     private Boolean status;

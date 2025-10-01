@@ -16,4 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
         ORDER BY RANDOM() LIMIT 1
         """, nativeQuery = true)
     Optional<Long> findRandomEmployeeId();
+    boolean existsByUsername(String username);
+    Optional<Employee> findByUsername(String username);
 }

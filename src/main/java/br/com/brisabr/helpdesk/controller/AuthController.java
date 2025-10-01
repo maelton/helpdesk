@@ -1,6 +1,6 @@
 package br.com.brisabr.helpdesk.controller;
 
-import br.com.brisabr.helpdesk.model.auth.LoginResponseDTO;
+import br.com.brisabr.helpdesk.model.auth.dto.LoginResponseDTO;
 import br.com.brisabr.helpdesk.model.user.dto.UserLoginDTO;
 import br.com.brisabr.helpdesk.service.AuthService;
 
