@@ -2,9 +2,13 @@ package br.com.brisabr.helpdesk.model.chat;
 
 import java.time.LocalDateTime;
 
+
+import br.com.brisabr.helpdesk.model.chat.dto.ChatMessageType;
 import br.com.brisabr.helpdesk.model.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +32,12 @@ public class ChatMessage {
     @JoinColumn(name="chat_id")
     Chat chat;
     
+    @Enumerated(EnumType.STRING)
+    ChatMessageType type;
+    
+    @ManyToOne
     User sender;
+    
     String content;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
