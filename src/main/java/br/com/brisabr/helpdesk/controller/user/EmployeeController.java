@@ -1,8 +1,8 @@
 package br.com.brisabr.helpdesk.controller.user;
 
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
-import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeCreateDTO;
-import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeResponseDTO;
+import br.com.brisabr.helpdesk.model.employee.Employee;
+import br.com.brisabr.helpdesk.model.employee.dto.EmployeeCreateDTO;
+import br.com.brisabr.helpdesk.model.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.service.EmployeeService;
 
 import jakarta.persistence.EntityNotFoundException;

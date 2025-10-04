@@ -1,9 +1,9 @@
 package br.com.brisabr.helpdesk.service;
 
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
-import br.com.brisabr.helpdesk.model.user.employee.EmployeeCreatedEvent;
-import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeCreateDTO;
-import br.com.brisabr.helpdesk.model.user.employee.dto.EmployeeResponseDTO;
+import br.com.brisabr.helpdesk.model.employee.Employee;
+import br.com.brisabr.helpdesk.model.employee.EmployeeCreatedEvent;
+import br.com.brisabr.helpdesk.model.employee.dto.EmployeeCreateDTO;
+import br.com.brisabr.helpdesk.model.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.utils.hash.PasswordGenerator;
 

@@ -1,7 +1,7 @@
 package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.product.Product;
-import br.com.brisabr.helpdesk.model.product.category.ProductCategory;
+import br.com.brisabr.helpdesk.model.product_category.ProductCategory;
 import br.com.brisabr.helpdesk.model.product.dto.ProductCreateDTO;
 import br.com.brisabr.helpdesk.service.ProductService;
 

@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.client.dto;
+package br.com.brisabr.helpdesk.model.client.dto;
 
 public record ClientUpdateDTO(
     String name,

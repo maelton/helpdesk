@@ -2,9 +2,9 @@ package br.com.brisabr.helpdesk.service;
 
 import br.com.brisabr.helpdesk.model.auth.Jwt;
 import br.com.brisabr.helpdesk.model.auth.dto.LoginResponseDTO;
-import br.com.brisabr.helpdesk.model.user.client.Client;
+import br.com.brisabr.helpdesk.model.client.Client;
 import br.com.brisabr.helpdesk.model.user.dto.UserLoginDTO;
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.model.employee.Employee;
 
 import java.util.stream.Collectors;
 

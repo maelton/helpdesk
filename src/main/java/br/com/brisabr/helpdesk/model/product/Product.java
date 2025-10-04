@@ -1,6 +1,6 @@
 package br.com.brisabr.helpdesk.model.product;
 
-import br.com.brisabr.helpdesk.model.product.category.ProductCategory;
+import br.com.brisabr.helpdesk.model.product_category.ProductCategory;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 
 import jakarta.persistence.Entity;

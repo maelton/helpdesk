@@ -1,6 +1,6 @@
 package br.com.brisabr.helpdesk.repository;
 
-import br.com.brisabr.helpdesk.model.user.client.Client;
+import br.com.brisabr.helpdesk.model.client.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

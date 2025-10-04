@@ -1,10 +1,9 @@
 package br.com.brisabr.helpdesk.service;
 
-import br.com.brisabr.helpdesk.model.user.client.Client;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientCreateDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientResponseDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientUpdateDTO;
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.model.client.Client;
+import br.com.brisabr.helpdesk.model.client.dto.ClientCreateDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientResponseDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientUpdateDTO;
 import br.com.brisabr.helpdesk.repository.ClientRepository;
 
 import jakarta.persistence.EntityNotFoundException;

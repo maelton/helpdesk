@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.employee;
+package br.com.brisabr.helpdesk.model.client;
 
 import br.com.brisabr.helpdesk.model.user.User;
 
@@ -10,17 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
-@NoArgsConstructor
 @Getter @Setter
+@NoArgsConstructor
 @Entity
-@Table(name = "tb_employee")
-public class Employee extends User {
-    private UUID internalCode; //AUTO-GENERATED
-    private String firstName;
-    private String lastName;
-
+@Table(name = "tb_client")
+public class Client extends User {
+    private String name;
+    
     @Column(unique=true, nullable=false, length = 11)
-    private String cpf;
+    private String taxId;
+    private String address;
+    private String phone;
+    private Boolean status;
 }

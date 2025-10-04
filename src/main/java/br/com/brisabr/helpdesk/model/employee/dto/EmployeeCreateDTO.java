@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.employee.dto;
+package br.com.brisabr.helpdesk.model.employee.dto;
 
 import org.hibernate.validator.constraints.br.CPF;
 
