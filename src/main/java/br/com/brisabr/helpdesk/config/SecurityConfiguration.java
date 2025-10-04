@@ -49,6 +49,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .requestMatchers("/api/v1/auth/login").permitAll()
                 .requestMatchers("/api/v1/tickets/open").authenticated()
+                .requestMatchers("/api/v1/tickets/**/assign").authenticated()
                 .anyRequest().permitAll()
             );
         return httpSecurity.build();

@@ -3,6 +3,7 @@ package br.com.brisabr.helpdesk.service;
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.ticket.Ticket;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketAssignDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
@@ -172,6 +173,19 @@ public class TicketService {
         ticket.setAssignedTo(responsibleEmployee);
         ticket.setRequester(requester);
 
+        Ticket saved = ticketRepository.save(ticket);
+        return toResponse(saved);
+    }
+
+    @Transactional
+    public TicketResponseDTO assignTicket(Long ticketId, TicketAssignDTO dto) {
+        Ticket ticket = getTicket(ticketId);
+        
+        Employee employee = employeeRepository.findById(dto.employeeId())
+            .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + dto.employeeId()));
+        
+        ticket.setAssignedTo(employee);
+        
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
     } 
