@@ -2,8 +2,7 @@ package br.com.brisabr.helpdesk.model.chat;
 
 import java.time.LocalDateTime;
 
-
-import br.com.brisabr.helpdesk.model.chat.dto.ChatMessageType;
+import br.com.brisabr.helpdesk.model.chat.enums.ChatMessageType;
 import br.com.brisabr.helpdesk.model.user.User;
 
 import jakarta.persistence.Entity;
