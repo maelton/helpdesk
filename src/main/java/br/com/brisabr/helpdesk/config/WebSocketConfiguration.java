@@ -1,6 +1,7 @@
 package br.com.brisabr.helpdesk.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -9,6 +10,10 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
+    private final AuthChannelInterceptor authChannelInterceptor;
+    public WebSocketConfiguration(AuthChannelInterceptor authChannelInterceptor) {
+        this.authChannelInterceptor = authChannelInterceptor;
+    }
 
     /**
      * Registra os endpoints STOMP, que são os pontos de entrada para a conexão WebSocket.
@@ -39,5 +44,10 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         // Clientes podem criar canais/tópicos se inscrevendo neles, especificando um caminho que começe 
         // com /topic. Por exemplo, /topic/ticket/{ticketId}.
         registry.enableSimpleBroker("/topic");
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(authChannelInterceptor);
     }
 }
