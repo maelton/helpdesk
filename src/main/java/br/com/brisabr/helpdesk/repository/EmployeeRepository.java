@@ -1,6 +1,6 @@
 package br.com.brisabr.helpdesk.repository;
 
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.model.employee.Employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
         ORDER BY RANDOM() LIMIT 1
         """, nativeQuery = true)
     Optional<Long> findRandomEmployeeId();
+    boolean existsByUsername(String username);
+    Optional<Employee> findByUsername(String username);
 }

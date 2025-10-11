@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.ticket.category;
+package br.com.brisabr.helpdesk.model.product_category;
 
 import java.time.LocalDateTime;
 
@@ -12,14 +12,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
 @NoArgsConstructor
-@Table(name="tb_ticket_category")
+@Getter @Setter
 @Entity
-public class TicketCategory {
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+@Table(name="tb_product_category")
+public class ProductCategory {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private String name;
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
