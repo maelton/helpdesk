@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService; // Add this
+    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     public AuthService (
@@ -33,7 +33,7 @@ public class AuthService {
             if (!passwordEncoder.matches(loginDetails.password(), userDetails.getPassword())) {
                 throw new BadCredentialsException("Invalid credentials");
             }
-            Jwt jwt = jwtService.generateJwt(userDetails.getUsername());
+            Jwt jwt = jwtService.generateJwt(userDetails);
             return new LoginResponseDTO(jwt.token());
         } catch (AuthenticationException e) {
             throw new RuntimeException("Email or password incorrect!");
