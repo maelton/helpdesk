@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService; // Add this
+    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final EmployeeService employeeService;
     private final ClientService clientService;
@@ -43,7 +43,7 @@ public class AuthService {
             if (!passwordEncoder.matches(loginDetails.password(), userDetails.getPassword())) {
                 throw new BadCredentialsException("Invalid credentials");
             }
-            Jwt jwt = jwtService.generateJwt(userDetails.getUsername());            
+            Jwt jwt = jwtService.generateJwt(userDetails);
             if (employeeService.existsByUsername(userDetails.getUsername())) {
                 Employee employee = employeeService.getByUsername(userDetails.getUsername());
                 return new LoginResponseDTO(

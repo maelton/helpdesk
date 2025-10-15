@@ -60,7 +60,7 @@ public abstract class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.getRoles().stream()
-                              .map(role -> new SimpleGrantedAuthority(role.toString()))
+                              .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                               .collect(Collectors.toList());
     };
 }
