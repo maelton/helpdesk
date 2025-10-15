@@ -9,12 +9,12 @@ public record TicketResponseDTO(
     Long requesterId,
     Long responsibleEmployeeId,
     Long productId,
-    Long closedById,
     String description,
     String priority,
     LocalDateTime dueDate,
     String status,
     LocalDateTime closedAt,
+    Long closedById,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}

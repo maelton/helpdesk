@@ -1,9 +1,9 @@
 package br.com.brisabr.helpdesk.service;
 
-import br.com.brisabr.helpdesk.model.user.client.Client;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientCreateDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientResponseDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientUpdateDTO;
+import br.com.brisabr.helpdesk.model.client.Client;
+import br.com.brisabr.helpdesk.model.client.dto.ClientCreateDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientResponseDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientUpdateDTO;
 import br.com.brisabr.helpdesk.repository.ClientRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -62,10 +62,20 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
+    public boolean existsByUsername(String username) {
+        return clientRepository.existsByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public Client getByUsername(String username) {
+        return clientRepository.findByUsername(username)
+            .orElseThrow(() -> new EntityNotFoundException("Client not found with username: " + username));
+    }
+
     private Client toEntity(ClientCreateDTO dto) {
         Client client = new Client();
         client.setName(dto.name());
-        client.setCpf(dto.cpf());
+        client.setTaxId(dto.cpf());
         client.setUsername(dto.email());
         client.setPassword(dto.password());
         client.setIsActive(dto.isActive());

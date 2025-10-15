@@ -1,4 +1,4 @@
-package br.com.brisabr.helpdesk.model.user.employee;
+package br.com.brisabr.helpdesk.model.employee;
 
 import br.com.brisabr.helpdesk.utils.mail.Email;
 import br.com.brisabr.helpdesk.utils.mail.EmailService;

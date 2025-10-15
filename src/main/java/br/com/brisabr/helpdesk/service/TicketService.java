@@ -3,13 +3,15 @@ package br.com.brisabr.helpdesk.service;
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.ticket.Ticket;
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketAssignDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketResponseDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketUpdateDTO;
-import br.com.brisabr.helpdesk.model.user.client.Client;
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.model.ticket.enums.TicketStatus;
+import br.com.brisabr.helpdesk.model.client.Client;
+import br.com.brisabr.helpdesk.model.employee.Employee;
 import br.com.brisabr.helpdesk.repository.ClientRepository;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.repository.ProductRepository;
@@ -155,6 +157,11 @@ public class TicketService {
             ticket.setProduct(product);
             ticket.setDescription(dto.description());
             ticket.setSla(product.getSla());
+            ticket.setDueDate(LocalDateTime.now().plusSeconds(product.getSla().getResolutionTime()));
+            ticket.setPriority(product.getSla().getPriority().getName());
+            ticket.setStatus(TicketStatus.OPEN.toString());
+            ticket.setCreatedAt(LocalDateTime.now());
+            ticket.setUpdatedAt(LocalDateTime.now());
         return ticket;
     }
 
@@ -174,6 +181,19 @@ public class TicketService {
 
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
+    }
+
+    @Transactional
+    public TicketResponseDTO assignTicket(Long ticketId, TicketAssignDTO dto) {
+        Ticket ticket = getTicket(ticketId);
+        
+        Employee employee = employeeRepository.findById(dto.employeeId())
+            .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + dto.employeeId()));
+        
+        ticket.setAssignedTo(employee);
+        
+        Ticket saved = ticketRepository.save(ticket);
+        return toResponse(saved);
     } 
 
     private TicketResponseDTO toResponse(Ticket t) {
@@ -184,12 +204,12 @@ public class TicketService {
             t.getRequester() != null ? t.getRequester().getId() : null,
             t.getAssignedTo() != null ? t.getAssignedTo().getId() : null,
             t.getProduct() != null ? t.getProduct().getId() : null,
-            t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getDescription(),
             t.getPriority(),
             t.getDueDate(),
             t.getStatus(),
             t.getClosedAt(),
+            t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getCreatedAt(),
             t.getUpdatedAt()
         );
