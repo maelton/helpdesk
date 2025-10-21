@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.brisabr.helpdesk.model.ticket.dto.TicketAssignDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketClosedDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketCreateDTO;
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketOpeningDTO;
@@ -68,6 +70,16 @@ public class TicketController {
     @PostMapping("/{id}/close")
     public ResponseEntity<TicketResponseDTO> close(@PathVariable Long id, @Valid @RequestBody TicketClosedDTO dto) {
         return ResponseEntity.ok(ticketService.close(id, dto));
+    }
+
+    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('SUPERVISOR')")
+    @PostMapping("/{id}/assign")
+    public ResponseEntity<TicketResponseDTO> assignTicket(
+            @PathVariable Long id,
+            @Valid @RequestBody TicketAssignDTO dto) {
+        TicketResponseDTO assigned = ticketService.assignTicket(id, dto);
+        return ResponseEntity.ok(assigned);
     }
 
     @DeleteMapping("/{id}")

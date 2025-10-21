@@ -1,0 +1,1 @@
+ALTER TABLE tb_client RENAME COLUMN cpf TO tax_id;

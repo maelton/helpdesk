@@ -1,8 +1,8 @@
 package br.com.brisabr.helpdesk.controller.user;
 
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientCreateDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientResponseDTO;
-import br.com.brisabr.helpdesk.model.user.client.dto.ClientUpdateDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientCreateDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientResponseDTO;
+import br.com.brisabr.helpdesk.model.client.dto.ClientUpdateDTO;
 import br.com.brisabr.helpdesk.service.ClientService;
 
 import jakarta.validation.Valid;

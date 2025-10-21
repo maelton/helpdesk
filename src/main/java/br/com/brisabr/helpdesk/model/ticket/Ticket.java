@@ -2,9 +2,9 @@ package br.com.brisabr.helpdesk.model.ticket;
 
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
-import br.com.brisabr.helpdesk.model.ticket.category.TicketCategory;
-import br.com.brisabr.helpdesk.model.user.client.Client;
-import br.com.brisabr.helpdesk.model.user.employee.Employee;
+import br.com.brisabr.helpdesk.model.ticket_category.TicketCategory;
+import br.com.brisabr.helpdesk.model.client.Client;
+import br.com.brisabr.helpdesk.model.employee.Employee;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
