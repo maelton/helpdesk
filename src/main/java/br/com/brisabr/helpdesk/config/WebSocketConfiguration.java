@@ -24,7 +24,13 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // Define o endpoint "/ws" que os clientes usarão para se conectar.
         // .withSockJS() oferece uma opção de fallback para navegadores que não suportam WebSockets nativamente.
-        registry.addEndpoint("/ws").withSockJS();
+        registry.addEndpoint("/ws")
+                .setAllowedOriginPatterns("*");  
+                
+        // Adiciona endpoint também com SockJS para fallback
+        registry.addEndpoint("/ws")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 
     /**
