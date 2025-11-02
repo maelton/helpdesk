@@ -50,7 +50,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            .csrf(Customizer.withDefaults())
+            .csrf(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
@@ -99,6 +99,8 @@ public class SecurityConfiguration {
 	        configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
             configuration.setAllowCredentials(true);
 	        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+            configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+            configuration.setExposedHeaders(Arrays.asList("Authorization"));
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", configuration);
 	return source;
