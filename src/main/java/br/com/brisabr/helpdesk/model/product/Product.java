@@ -4,6 +4,7 @@ import br.com.brisabr.helpdesk.model.product_category.ProductCategory;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +18,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -34,7 +37,7 @@ public class Product {
     @ManyToOne @JoinColumn(name="category_id")
     private ProductCategory category;
 
-    @ManyToOne @JoinColumn(name="sla_id")
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name="sla_id") @JsonIgnore
     private Sla sla;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

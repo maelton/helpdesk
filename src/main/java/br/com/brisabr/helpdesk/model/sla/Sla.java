@@ -1,6 +1,7 @@
 package br.com.brisabr.helpdesk.model.sla;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +15,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter @Setter
 @NoArgsConstructor
 @Entity
@@ -22,12 +25,10 @@ public class Sla {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "calendar_id")
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "calendar_id") @JsonIgnore
     private SlaCalendar calendar;
     
-    @ManyToOne
-    @JoinColumn(name = "priority_id")
+    @ManyToOne @JoinColumn(name = "priority_id")
     private SlaPriority priority;
     
     private String name;
