@@ -2,9 +2,11 @@ package br.com.brisabr.helpdesk.service;
 
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.product_category.ProductCategory;
+import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.product.dto.ProductCreateDTO;
 import br.com.brisabr.helpdesk.repository.ProductCategoryRespository;
 import br.com.brisabr.helpdesk.repository.ProductRepository;
+import br.com.brisabr.helpdesk.repository.SlaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductCategoryRespository productCategoryRepository;
+    private final SlaRepository slaRepository;
 
     @Transactional
     public Product create(ProductCreateDTO dto) {
@@ -60,9 +63,12 @@ public class ProductService {
 
         ProductCategory category = productCategoryRepository.findById(dto.categoryId())
             .orElseThrow(() -> new RuntimeException("Product category ID not found"));
-        
         product.setCategory(category);
-        // internalCode, createdAt, and updatedAt can be handled by the persistence layer or listeners
+
+        Sla sla = slaRepository.findById(3L)
+            .orElseThrow(() -> new RuntimeException("Default SLA not found"));
+        product.setSla(sla);
+        
         return product;
     }
 }
