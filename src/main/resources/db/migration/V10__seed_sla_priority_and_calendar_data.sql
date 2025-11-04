@@ -30,17 +30,17 @@ VALUES
     (2, 'SATURDAY', '08:00:00', '12:00:00', FALSE, NOW(), NOW()),
     (2, 'SUNDAY', '08:00:00', '18:00:00', FALSE, NOW(), NOW());
 
-INSERT INTO tb_sla_exception (id, name, description, exception_date, type, is_recurring, is_active, created_at, updated_at)
+INSERT INTO tb_sla_exception (name, description, exception_date, type, is_recurring, is_active, created_at, updated_at)
 VALUES
-    (1, 'Natal 2026', 'Christmas Day', '2026-12-25', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (2, 'Ano Novo 2026', 'New Year Day', '2026-01-01', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (3, 'Independência do Brasil 2026', 'Brazil Independence Day', '2026-09-07', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (4, 'Tiradentes 2026', 'Tiradentes Day', '2026-04-21', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (5, 'Dia do Trabalhador 2026', 'Labor Day', '2026-05-01', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (6, 'Nossa Senhora Aparecida 2026', 'Our Lady of Aparecida', '2026-10-12', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (7, 'Finados 2026', 'All Souls’ Day', '2026-11-02', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (8, 'Proclamação da República 2026', 'Republic Proclamation Day', '2026-11-15', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
-    (9, 'Consciência Negra 2026', 'Black Awareness Day', '2026-11-20', 'HOLIDAY', TRUE, TRUE, NOW(), NOW());
+    ('Natal 2026', 'Christmas Day', '2026-12-25', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Ano Novo 2026', 'New Year Day', '2026-01-01', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Independência do Brasil 2026', 'Brazil Independence Day', '2026-09-07', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Tiradentes 2026', 'Tiradentes Day', '2026-04-21', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Dia do Trabalhador 2026', 'Labor Day', '2026-05-01', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Nossa Senhora Aparecida 2026', 'Our Lady of Aparecida', '2026-10-12', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Finados 2026', 'All Souls’ Day', '2026-11-02', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Proclamação da República 2026', 'Republic Proclamation Day', '2026-11-15', 'HOLIDAY', TRUE, TRUE, NOW(), NOW()),
+    ('Consciência Negra 2026', 'Black Awareness Day', '2026-11-20', 'HOLIDAY', TRUE, TRUE, NOW(), NOW());
 
 INSERT INTO tb_sla_calendar_exception (calendar_id, exception_id)
 VALUES
