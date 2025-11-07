@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS tb_client
 (
-    id      BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id            BIGINT NOT NULL,
     name    VARCHAR(255),
     cpf     VARCHAR(11) NOT NULL,
     address VARCHAR(255),
@@ -18,11 +18,12 @@ CREATE TABLE IF NOT EXISTS tb_department
 
 CREATE TABLE IF NOT EXISTS tb_employee
 (
-    id            BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id            BIGINT NOT NULL,
     internal_code UUID,
     first_name    VARCHAR(255),
     last_name     VARCHAR(255),
-    cpf           VARCHAR(11) NOT NULL
+    cpf           VARCHAR(11) NOT NULL,
+    CONSTRAINT pk_tb_employee PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS tb_product
@@ -95,7 +96,8 @@ CREATE TABLE IF NOT EXISTS tb_user
     is_password_changed BOOLEAN,
     is_active           BOOLEAN,
     created_at          TIMESTAMP WITHOUT TIME ZONE,
-    updated_at          TIMESTAMP WITHOUT TIME ZONE
+    updated_at          TIMESTAMP WITHOUT TIME ZONE,
+    CONSTRAINT pk_tb_user PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS tb_user_role
