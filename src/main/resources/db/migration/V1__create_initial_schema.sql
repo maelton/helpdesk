@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS tb_client
     cpf     VARCHAR(11) NOT NULL,
     address VARCHAR(255),
     phone   VARCHAR(255),
-    status  BOOLEAN
+    status  BOOLEAN,
+    CONSTRAINT pk_tb_client PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS tb_department
@@ -96,8 +97,7 @@ CREATE TABLE IF NOT EXISTS tb_user
     is_password_changed BOOLEAN,
     is_active           BOOLEAN,
     created_at          TIMESTAMP WITHOUT TIME ZONE,
-    updated_at          TIMESTAMP WITHOUT TIME ZONE,
-    CONSTRAINT pk_tb_user PRIMARY KEY (id)
+    updated_at          TIMESTAMP WITHOUT TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS tb_user_role

@@ -4,8 +4,8 @@ services:
     container_name: brisa-helpdesk-database
     image: 'postgres:17.6'
     environment:
-      - POSTGRES_USER: ${DB_USER:-admin}
-      - POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}
-      - POSTGRES_DB: ${DB_NAME:-sighas}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}
+      POSTGRES_DB: ${DB_NAME:-helpdesk}
     ports:
       - '5432:5432'
