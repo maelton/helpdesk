@@ -3,15 +3,17 @@ package br.com.brisabr.helpdesk.model.ticket;
 import br.com.brisabr.helpdesk.model.product.Product;
 import br.com.brisabr.helpdesk.model.sla.Sla;
 import br.com.brisabr.helpdesk.model.ticket_category.TicketCategory;
+import br.com.brisabr.helpdesk.model.chat.Chat;
 import br.com.brisabr.helpdesk.model.client.Client;
 import br.com.brisabr.helpdesk.model.employee.Employee;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
@@ -52,4 +54,7 @@ public class Ticket {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     //TODO: private Contract contract;
+
+    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Chat chat;
 }

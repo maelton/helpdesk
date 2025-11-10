@@ -1,9 +1,11 @@
 package br.com.brisabr.helpdesk.controller;
 
 import br.com.brisabr.helpdesk.model.chat.ChatMessage;
+import br.com.brisabr.helpdesk.model.chat.dto.ChatMessageDTO;
 import br.com.brisabr.helpdesk.model.chat.enums.ChatMessageType;
 import br.com.brisabr.helpdesk.model.ticket.Ticket;
 import br.com.brisabr.helpdesk.model.user.User;
+import br.com.brisabr.helpdesk.repository.ChatMessageRepository;
 import br.com.brisabr.helpdesk.repository.TicketRepository;
 
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -12,6 +14,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -19,9 +22,11 @@ import java.time.LocalDateTime;
 public class ChatController {
     
     private final TicketRepository ticketRepository;
+    private final ChatMessageRepository chatMessageRepository;
     
-    public ChatController(TicketRepository ticketRepository) {
+    public ChatController(TicketRepository ticketRepository, ChatMessageRepository chatMessageRepository) {
         this.ticketRepository = ticketRepository;
+        this.chatMessageRepository = chatMessageRepository;
     }
     
     /**
@@ -33,11 +38,12 @@ public class ChatController {
      * @param ticketId ID do ticket
      * @param message Conteúdo da mensagem
      * @param headerAccessor Acesso aos headers da mensagem WebSocket
-     * @return ChatMessage processada
+     * @return ChatMessageDTO processada
      */
     @MessageMapping("/chat/{ticketId}")
     @SendTo("/topic/chat/{ticketId}")
-    public ChatMessage sendMessage(
+    @Transactional
+    public ChatMessageDTO sendMessage(
             @DestinationVariable Long ticketId,
             String message,
             SimpMessageHeaderAccessor headerAccessor) {
@@ -74,14 +80,22 @@ public class ChatController {
         chatMessage.setContent(message);
         chatMessage.setSender(user);
         chatMessage.setCreatedAt(LocalDateTime.now());
+        chatMessage.setChat(ticket.getChat());
         
-        // Determinar tipo da mensagem baseado no tipo do usuário
         if (isRequester) {
             chatMessage.setType(ChatMessageType.CLIENT_MESSAGE);
         } else {
             chatMessage.setType(ChatMessageType.AGENT_MESSAGE);
         }
+
+        // Salvar a mensagem no banco de dados
+        ChatMessage savedMessage = chatMessageRepository.save(chatMessage);
         
-        return chatMessage;
+        // Atualizar o timestamp do ticket
+        ticket.setUpdatedAt(LocalDateTime.now());
+        ticketRepository.save(ticket);
+        
+        // Converter para DTO antes de retornar
+        return ChatMessageDTO.fromEntity(savedMessage);
     }
 }
