@@ -1,10 +1,13 @@
 package br.com.brisabr.helpdesk.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.brisabr.helpdesk.model.ticket.dto.TicketAssignDTO;
@@ -58,7 +62,14 @@ public class TicketController {
     }
 
     @GetMapping
-    public Page<TicketResponseDTO> findAll(Pageable pageable) {
+    public Page<TicketResponseDTO> findAll(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+
+        Sort.Direction direction = Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, "id");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
         return ticketService.findAll(pageable);
     }
 
@@ -73,7 +84,6 @@ public class TicketController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasAuthority('SUPERVISOR')")
     @PostMapping("/{id}/assign")
     public ResponseEntity<TicketResponseDTO> assignTicket(
             @PathVariable Long id,

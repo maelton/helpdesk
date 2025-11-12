@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -48,20 +47,17 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .oauth2ResourceServer(conf -> conf.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-            .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
-                .requestMatchers("/api/v1/auth/login").permitAll()
-                .requestMatchers("/api/v1/tickets/open").authenticated()
-                .requestMatchers("/api/v1/tickets/*/assign").authenticated()
-                .anyRequest().permitAll()
-            );
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()))
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/v1/auth/login").permitAll()
+                        .requestMatchers("/ws/**").permitAll() 
+                        .requestMatchers("/api/v1/tickets/open").authenticated()
+                        .anyRequest().permitAll());
         return httpSecurity.build();
     }
 
@@ -89,7 +85,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

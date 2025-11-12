@@ -28,6 +28,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +55,8 @@ public class TicketService {
 
     @Transactional(readOnly = true)
     public Page<TicketResponseDTO> findAll(Pageable pageable) {
-        return ticketRepository.findAll(pageable).map(this::toResponse);
+        Pageable page = Pageable.ofSize(10).withPage(pageable.getPageNumber());
+        return ticketRepository.findAll(page).map(this::toResponse);
     }
 
     @Transactional
@@ -197,6 +199,20 @@ public class TicketService {
     } 
 
     private TicketResponseDTO toResponse(Ticket t) {
+        List<TicketResponseDTO.ChatMessage> messages = t.getChat() != null ? t.getChat().getMessages().stream().map(m -> 
+            new TicketResponseDTO.ChatMessage(
+                m.getId(),
+                new TicketResponseDTO.Sender(
+                    m.getSender().getId(),
+                    m.getSender().getUsername(),
+                    m.getSender().getRoles()
+                ),
+                m.getContent(),
+                m.getType(),
+                m.getCreatedAt()
+            )
+        ).toList() : List.of();
+
         return new TicketResponseDTO(
             t.getId(),
             t.getTitle(),
@@ -211,7 +227,8 @@ public class TicketService {
             t.getClosedAt(),
             t.getClosedBy() != null ? t.getClosedBy().getId() : null,
             t.getCreatedAt(),
-            t.getUpdatedAt()
+            t.getUpdatedAt(),
+            new TicketResponseDTO.Chat(messages)
         );
     }
 }
