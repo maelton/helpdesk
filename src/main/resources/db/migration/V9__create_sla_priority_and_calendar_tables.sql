@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS tb_sla_priority
     level       INTEGER NOT NULL,
     color       VARCHAR(7),
     is_active   BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    updated_at  TIMESTAMP WITHOUT TIME ZONE,
+    created_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     CONSTRAINT uq_tb_sla_priority_name UNIQUE (name),
     CONSTRAINT uq_tb_sla_priority_level UNIQUE (level),
     CONSTRAINT ck_tb_sla_priority_level_positive CHECK (level > 0)
@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS tb_sla_calendar
     consider_weekends   BOOLEAN NOT NULL DEFAULT FALSE,
     consider_holidays   BOOLEAN NOT NULL DEFAULT TRUE,
     is_active           BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at          TIMESTAMP WITHOUT TIME ZONE,
-    updated_at          TIMESTAMP WITHOUT TIME ZONE,
+    created_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     CONSTRAINT uq_tb_sla_calendar_name UNIQUE (name)
 );
 
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS tb_sla_day
     start_time      TIME NOT NULL,
     end_time        TIME NOT NULL,
     is_working_day  BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at      TIMESTAMP WITHOUT TIME ZONE,
-    updated_at      TIMESTAMP WITHOUT TIME ZONE,
+    created_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     CONSTRAINT uq_tb_sla_day_calendar_day UNIQUE (calendar_id, day_of_week),
     CONSTRAINT ck_tb_sla_day_valid_day CHECK (day_of_week IN ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY')),
     CONSTRAINT ck_tb_sla_day_time_order CHECK (start_time < end_time)
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS tb_sla_exception
     end_time        TIME,
     is_recurring    BOOLEAN NOT NULL DEFAULT FALSE,
     is_active       BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at      TIMESTAMP WITHOUT TIME ZONE,
-    updated_at      TIMESTAMP WITHOUT TIME ZONE,
+    created_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     CONSTRAINT ck_tb_sla_exception_type CHECK (type IN ('HOLIDAY', 'SPECIAL_HOURS', 'NON_WORKING_DAY')),
     CONSTRAINT ck_tb_sla_exception_special_hours CHECK (
         (type != 'SPECIAL_HOURS') OR 
