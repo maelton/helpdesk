@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -68,6 +69,9 @@ public class ProductService {
         Sla sla = slaRepository.findById(3L)
             .orElseThrow(() -> new RuntimeException("Default SLA not found"));
         product.setSla(sla);
+
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
         
         return product;
     }
