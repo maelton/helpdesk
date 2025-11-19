@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS tb_department
 (
     id         BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name       VARCHAR(255),
-    created_at TIMESTAMP WITHOUT TIME ZONE,
-    updated_at TIMESTAMP WITHOUT TIME ZONE
+    created_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_employee
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS tb_product
     is_physical   BOOLEAN,
     category_id   BIGINT,
     sla_id        BIGINT,
-    created_at    TIMESTAMP WITHOUT TIME ZONE,
-    updated_at    TIMESTAMP WITHOUT TIME ZONE
+    created_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_product_category
@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS tb_product_category
     id          BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name        VARCHAR(255),
     description VARCHAR(255),
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    updated_at  TIMESTAMP WITHOUT TIME ZONE
+    created_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_sla
@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS tb_sla
     response_time   BIGINT,
     resolution_time BIGINT,
     is_active       BOOLEAN,
-    created_at      TIMESTAMP WITHOUT TIME ZONE,
-    updated_at      TIMESTAMP WITHOUT TIME ZONE
+    created_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_ticket
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS tb_ticket
     status       VARCHAR(255),
     category_id  BIGINT,
     closed_at    TIMESTAMP WITHOUT TIME ZONE,
-    created_at   TIMESTAMP WITHOUT TIME ZONE,
-    updated_at   TIMESTAMP WITHOUT TIME ZONE
+    created_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_ticket_category
@@ -85,8 +85,8 @@ CREATE TABLE IF NOT EXISTS tb_ticket_category
     id          BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     title       VARCHAR(255),
     description VARCHAR(255),
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    updated_at  TIMESTAMP WITHOUT TIME ZONE
+    created_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at  TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_user
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS tb_user
     password            VARCHAR(255)                            NOT NULL,
     is_password_changed BOOLEAN,
     is_active           BOOLEAN,
-    created_at          TIMESTAMP WITHOUT TIME ZONE,
-    updated_at          TIMESTAMP WITHOUT TIME ZONE
+    created_at          TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at          TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS tb_user_role
@@ -112,6 +112,25 @@ CREATE TABLE IF NOT EXISTS tb_user_roles
     user_id  BIGINT NOT NULL,
     roles_id BIGINT NOT NULL,
     UNIQUE(user_id, roles_id)
+);
+
+CREATE TABLE IF NOT EXISTS tb_chat 
+(
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    ticket_id BIGINT NOT NULL REFERENCES tb_ticket(id),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS tb_chat_message 
+(
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    chat_id BIGINT REFERENCES tb_chat(id),
+    type TEXT,
+    sender_id BIGINT REFERENCES tb_user(id),
+    content TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
 ALTER TABLE tb_client

@@ -35,7 +35,7 @@ INSERT INTO tb_employee (id, internal_code, first_name, last_name, cpf)
 VALUES (1,
         '0bd70579-2369-4fb2-a675-4c3953f17bfa',
         'Admin',
-        'das Galáxias',
+        '',
         '23275817027');
 
 INSERT INTO tb_client (id, name, cpf, address, phone, status)
@@ -50,7 +50,7 @@ INSERT INTO tb_employee (id, internal_code, first_name, last_name, cpf)
 VALUES (3,
         'a90c110c-d803-41c4-a518-e2bb100ae7bd',
         'Carlos',
-        'das Galáxias',
+        '',
         '34524605096');
 
 INSERT INTO tb_client (id, name, cpf, address, phone, status)

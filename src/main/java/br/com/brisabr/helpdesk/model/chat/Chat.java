@@ -1,5 +1,6 @@
 package br.com.brisabr.helpdesk.model.chat;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,4 +31,7 @@ public class Chat {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "chat")
     Set<ChatMessage> messages = new LinkedHashSet<>();
+
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }
