@@ -48,6 +48,7 @@ public class AuthService {
                 Employee employee = employeeService.getByUsername(userDetails.getUsername());
                 return new LoginResponseDTO(
                     employee.getId(),
+                    employee.getUsername(),
                     employee.getFirstName() + " " + employee.getLastName(),
                     employee.getCpf(),
                     employee.getRoles().stream().map(userRole -> userRole.getName()).collect(Collectors.toSet()),
@@ -56,6 +57,7 @@ public class AuthService {
                 Client client = clientService.getByUsername(userDetails.getUsername());
                 return new LoginResponseDTO(
                     client.getId(),
+                    client.getUsername(),
                     client.getName(),
                     client.getTaxId(),
                     client.getRoles().stream().map(userRole -> userRole.getName()).collect(Collectors.toSet()),
