@@ -7,6 +7,7 @@ import br.com.brisabr.helpdesk.model.employee.dto.EmployeeResponseDTO;
 import br.com.brisabr.helpdesk.repository.EmployeeRepository;
 import br.com.brisabr.helpdesk.utils.hash.PasswordGenerator;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import jakarta.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -76,6 +79,8 @@ public class EmployeeService {
             employee.setCpf(dto.cpf());
             employee.setUsername(dto.email());
             employee.setIsActive(dto.isActive() != null && dto.isActive());
+            employee.setCreatedAt(LocalDateTime.now());
+            employee.setUpdatedAt(LocalDateTime.now());
         return employee;
     }
 

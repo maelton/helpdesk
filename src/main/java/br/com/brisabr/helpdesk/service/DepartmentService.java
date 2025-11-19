@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
     import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,7 +48,9 @@ public class DepartmentService {
     private Department toEntity(DepartmentCreateDTO dto) {
         Department department = new Department();
         department.setName(dto.name());
-        // createdAt/updatedAt can be handled by database defaults or entity listeners
+        department.setCreatedAt(LocalDateTime.now());
+        department.setUpdatedAt(LocalDateTime.now());
+
         return department;
     }
 }

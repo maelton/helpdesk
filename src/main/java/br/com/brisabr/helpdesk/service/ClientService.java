@@ -10,6 +10,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -79,6 +82,8 @@ public class ClientService {
         client.setUsername(dto.email());
         client.setPassword(dto.password());
         client.setIsActive(dto.isActive());
+        client.setCreatedAt(LocalDateTime.now());
+        client.setUpdatedAt(LocalDateTime.now());
         return client;
     }
 
@@ -90,6 +95,7 @@ public class ClientService {
         // Base User fields (assuming they exist on User)
         client.setUsername(dto.email());
         client.setIsActive(dto.isActive());
+        client.setUpdatedAt(LocalDateTime.now());
     }
 
     private ClientResponseDTO toResponse(Client client) {
