@@ -6,6 +6,7 @@ import br.com.brisabr.helpdesk.model.user.enums.Role;
 
 public record LoginResponseDTO(
     Long userId,
+    String email,
     String name,
     String cpf,
     Set<Role> roles,
