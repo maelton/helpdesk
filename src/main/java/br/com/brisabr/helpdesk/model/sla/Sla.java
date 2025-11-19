@@ -34,7 +34,7 @@ public class Sla {
     private String name;
     private String description;
     private Long responseTime;
-    private Long resolutionTime; //seconds
+    private Long resolutionTime; //minutes
     private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
