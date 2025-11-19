@@ -95,6 +95,7 @@ public class TicketService {
         if (dto.closedAt() != null) {
             ticket.setClosedAt(dto.closedAt());
         }
+        ticket.setUpdatedAt(LocalDateTime.now());
 
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
@@ -112,6 +113,7 @@ public class TicketService {
         if (dto.status() != null) {
             ticket.setStatus(dto.status());
         }
+        ticket.setUpdatedAt(LocalDateTime.now());
 
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
@@ -147,6 +149,8 @@ public class TicketService {
         t.setPriority(dto.priority());
         t.setDueDate(dto.dueDate());
         t.setStatus(dto.status());
+        t.setCreatedAt(LocalDateTime.now());
+        t.setUpdatedAt(LocalDateTime.now());
         return t;
     }
 
@@ -180,7 +184,9 @@ public class TicketService {
 
         ticket.setAssignedTo(responsibleEmployee);
         ticket.setRequester(requester);
-
+        ticket.setCreatedAt(LocalDateTime.now());
+        ticket.setUpdatedAt(LocalDateTime.now());
+        
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
     }
@@ -193,6 +199,7 @@ public class TicketService {
             .orElseThrow(() -> new EntityNotFoundException("Employee not found: " + dto.employeeId()));
         
         ticket.setAssignedTo(employee);
+        ticket.setUpdatedAt(LocalDateTime.now());
         
         Ticket saved = ticketRepository.save(ticket);
         return toResponse(saved);
